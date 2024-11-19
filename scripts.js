@@ -2,16 +2,18 @@ const gameBoard = (() => {
     const board = Array(9).fill(null);
 
     const placeMark = (playerIndex, pos) => {
-        if (board[pos]) return false
-        board[pos] = playerIndex
-        console.log(`Player ${playerIndex} placed a mark in position ${pos}`, board)
-        return true
-    }
+        if (board[pos]) return false;
+        board[pos] = playerIndex;
+        console.log(
+            `Player ${playerIndex} placed a mark in position ${pos}`,
+            board
+        );
+        return true;
+    };
     const resetBoard = () => board.fill(null);
 
-    return { placeMark, resetBoard }
+    return { placeMark, resetBoard };
 })();
-
 
 const players = ((
     playerOneName = "Player One",
@@ -19,18 +21,17 @@ const players = ((
 ) => {
     const list = [
         { name: playerOneName, id: 1, board: [] },
-        { name: playerTwoName, id: 2, board: [] }
-    ]
+        { name: playerTwoName, id: 2, board: [] },
+    ];
     let currentIndex = 0;
 
     const getCurrentPlayer = () => list[currentIndex];
     const setPositions = (pos) => list[currentIndex].board.push(pos);
     const getPositions = () => playerBoard;
-    const nextTurn = () => currentIndex = 1 - currentIndex;
+    const nextTurn = () => (currentIndex = 1 - currentIndex);
 
-    return { getCurrentPlayer, nextTurn, setPositions, getPositions }
+    return { getCurrentPlayer, nextTurn, setPositions, getPositions };
 })();
-
 
 const gameController = (function () {
     let winConditions = [
@@ -45,25 +46,24 @@ const gameController = (function () {
     ];
 
     const checkWinConditions = (currentPlayer) => {
-        const hasWinConditions = winConditions.some(
-            condition => condition.every(
-                pos => currentPlayer.board.includes(pos))
+        const hasWinConditions = winConditions.some((condition) =>
+            condition.every((pos) => currentPlayer.board.includes(pos))
         );
         if (hasWinConditions) {
-            console.log(currentPlayer.name + " has won")
-            gameBoard.resetBoard()
+            console.log(currentPlayer.name + " has won");
+            gameBoard.resetBoard();
         }
-    }
+    };
 
     const playTurn = (position) => {
-        const currentPlayer = players.getCurrentPlayer()
-        const play = gameBoard.placeMark(currentPlayer.id, position)
+        const currentPlayer = players.getCurrentPlayer();
+        const play = gameBoard.placeMark(currentPlayer.id, position);
         if (play) {
-            players.setPositions(position)
-            checkWinConditions(currentPlayer)
+            players.setPositions(position);
+            checkWinConditions(currentPlayer);
             players.nextTurn();
         }
-    }
+    };
 
-    return { playTurn }
+    return { playTurn };
 })();
