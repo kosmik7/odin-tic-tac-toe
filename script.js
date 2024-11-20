@@ -11,8 +11,9 @@ const gameBoard = (() => {
         return true;
     };
     const resetBoard = () => board.fill(null);
+    const isTie = () => !board.includes(null);
 
-    return { placeMark, resetBoard };
+    return { placeMark, resetBoard, isTie };
 })();
 
 const players = ((
@@ -26,11 +27,21 @@ const players = ((
     let currentIndex = 0;
 
     const getCurrentPlayer = () => list[currentIndex];
-    const setPositions = (pos) => list[currentIndex].board.push(pos);
+    const setPosition = (pos) => list[currentIndex].board.push(pos);
     const getPositions = () => playerBoard;
     const nextTurn = () => (currentIndex = 1 - currentIndex);
+    const resetBoard = () =>
+        list.forEach((player) => {
+            player.board = [];
+        });
 
-    return { getCurrentPlayer, nextTurn, setPositions, getPositions };
+    return {
+        getCurrentPlayer,
+        setPosition,
+        getPositions,
+        nextTurn,
+        resetBoard,
+    };
 })();
 
 const gameController = (function () {
@@ -45,22 +56,29 @@ const gameController = (function () {
         [2, 4, 6],
     ];
 
-    const checkWinConditions = (currentPlayer) => {
+    const checkGameOver = (currentPlayer) => {
         const hasWinConditions = winConditions.some((condition) =>
             condition.every((pos) => currentPlayer.board.includes(pos))
         );
+
         if (hasWinConditions) {
-            console.log(currentPlayer.name + " has won");
-            gameBoard.resetBoard();
+            console.log("Game Over: " + currentPlayer.name + " has won");
+            resetGame();
+        } else if (gameBoard.isTie()) {
+            console.log("Game Over: Tie");
+            resetGame();
         }
     };
-
+    const resetGame = () => {
+        gameBoard.resetBoard();
+        players.resetBoard();
+    };
     const playTurn = (position) => {
         const currentPlayer = players.getCurrentPlayer();
         const play = gameBoard.placeMark(currentPlayer.id, position);
         if (play) {
-            players.setPositions(position);
-            checkWinConditions(currentPlayer);
+            players.setPosition(position);
+            checkGameOver(currentPlayer);
             players.nextTurn();
         }
     };
