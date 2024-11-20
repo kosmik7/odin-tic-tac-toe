@@ -28,20 +28,13 @@ const players = ((
 
     const getCurrentPlayer = () => list[currentIndex];
     const setPosition = (pos) => list[currentIndex].board.push(pos);
-    const getPositions = () => playerBoard;
     const nextTurn = () => (currentIndex = 1 - currentIndex);
     const resetBoard = () =>
         list.forEach((player) => {
             player.board = [];
         });
 
-    return {
-        getCurrentPlayer,
-        setPosition,
-        getPositions,
-        nextTurn,
-        resetBoard,
-    };
+    return { getCurrentPlayer, setPosition, nextTurn, resetBoard };
 })();
 
 const gameController = (function () {
