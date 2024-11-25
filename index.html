@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    <title>Tic Tac Toe</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="script.js" defer></script>
+        <title>Tic Tac Toe</title>
+    </head>
+    <body>
+        <div class="game">
+            <div class="game__status">
+                <p id="game_playerOneName">Player One</p>
+                <p>Tie</p>
+                <p id="game_playerTwoName">Player Two</p>
+                <p id="game_playerOneScore">0</p>
+                <p id="game_tieScore">0</p>
+                <p id="game_playerTwoScore">0</p>
+            </div>
+            <div class="wrapper">
+                <div class="game__board">
+                    <div class="game_line game_line--h1"></div>
+                    <div class="game_line game_line--h2"></div>
+                    <div class="game_line game_line--v1"></div>
+                    <div class="game_line game_line--v2"></div>
+                    <div><span>X</span></div>
+                    <div><span>X</span></div>
+                    <div><span>X</span></div>
+                    <div><span>O</span></div>
+                    <div><span>X</span></div>
+                    <div><span>O</span></div>
+                    <div><span>O</span></div>
+                    <div><span>O</span></div>
+                    <div><span>X</span></div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
