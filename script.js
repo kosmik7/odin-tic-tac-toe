@@ -1,15 +1,17 @@
 const gameBoard = (() => {
     const board = Array(9).fill(null);
-    const boardElement = document.querySelectorAll(
+    const boardElement = document.getElementById("game__board");
+    const boardSquaresElements = boardElement.querySelectorAll(
         ".game__board>div[data-index]"
     );
+    boardElement.addEventListener("click", (event) => {
+        const square = event.target.closest("[data-index]");
+        if (square) gameController.playTurn(square.dataset.index);
+    });
 
     const placeMark = (playerIndex, position) => {
         if (board[position]) return false;
         board[position] = playerIndex;
-        console.log(
-            `Player ${playerIndex} placed a mark in position ${position}`
-        );
         render([position]);
         return true;
     };
@@ -25,19 +27,18 @@ const gameBoard = (() => {
                 case 1:
                     img.src = "ico-cross.svg";
                     img.alt = "Cross icon";
-                    boardElement[value].appendChild(img);
+                    boardSquaresElements[value].appendChild(img);
                     break;
                 case 2:
                     img.src = "ico-circle.svg";
                     img.alt = "Circle icon";
-                    boardElement[value].appendChild(img);
+                    boardSquaresElements[value].appendChild(img);
                     break;
                 default:
-                    boardElement[index].innerHTML = "";
+                    boardSquaresElements[index].innerHTML = "";
             }
         });
     };
-
     return { placeMark, resetBoard, isTie };
 })();
 
