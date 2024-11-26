@@ -108,19 +108,25 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: .25rem .5rem;
-    align-items: center;
-    justify-items: center;
+    align-items: stretch;
+    justify-content: center;
+    text-align: center;
     padding: 2.5rem 1rem;
 
     font-size: 1.4rem;
     font-weight: 500;
 }
 
-#game_playerOneName,
-#game_playerTwoName {
-    background-color: var(--color-playerone);
+.game__status p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: .2rem .8rem;
     border-radius: .5rem;
+}
+
+#game_playerOneName {
+    background-color: var(--color-playerone);
 }
 
 #game_playerTwoName {
