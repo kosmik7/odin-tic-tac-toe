@@ -10,12 +10,18 @@
     <body>
         <div class="game">
             <div class="game__status">
-                <p id="game_playerOneName"><span>Player One</span></p>
-                <p><span>Tie</span></p>
-                <p id="game_playerTwoName"><span>Player Two</span></p>
-                <p id="game_playerOneScore"><span>0</span></p>
-                <p id="game_tieScore"><span>0</span></p>
-                <p id="game_playerTwoScore"><span>0</span></p>
+                <div id="game_playerOneStatus">
+                    <p id="game_playerOneName">Player One</p>
+                    <p id="game_playerOneScore">0</p>
+                </div>
+                <div id="game_tieStatus">
+                    <p>Ties</p>
+                    <p id="game_tieScore">0</p>
+                </div>
+                <div id="game_playerTwoStatus">
+                    <p id="game_playerTwoName">Player One</p>
+                    <p id="game_playerTwoScore">0</p>
+                </div>
             </div>
             <div class="wrapper">
                 <div id="game__board" class="game__board">
@@ -23,6 +29,9 @@
                     <div class="game_line game_line--h2"></div>
                     <div class="game_line game_line--v1"></div>
                     <div class="game_line game_line--v2"></div>
+                    <div class="game__message">
+                        <p>This is a test message</p>
+                    </div>
                     <div data-index="0"></div>
                     <div data-index="1"></div>
                     <div data-index="2"></div>
@@ -33,6 +42,9 @@
                     <div data-index="7"></div>
                     <div data-index="8"></div>
                 </div>
+            </div>
+            <div id="game__replay">
+                <button>Replay</button>
             </div>
         </div>
     </body>

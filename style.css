@@ -100,40 +100,50 @@ body {
 }
 
 .game {
-    margin: 4rem auto;
+    margin: 5rem auto;
     width: min(60ch, 94%);
 }
 
 .game__status {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: .25rem .5rem;
-    align-items: stretch;
-    justify-content: center;
-    text-align: center;
-    padding: 2.5rem 1rem;
+    gap: .25rem 12px;
+    padding: 0 1rem;
 
     font-size: 1.4rem;
     font-weight: 500;
 }
 
-.game__status p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: .2rem .8rem;
+.game__status > div {
+    display: grid;
+    grid: subgrid / subgrid;
+    grid-row: span 2;
     border-radius: .5rem;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    padding: .5rem;
 }
 
-#game_playerOneName {
+.game__status > div > p {
+    display: grid;
+    grid-row: span 1;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
+#game_playerOneStatus {
     background-color: var(--color-playerone);
 }
 
-#game_playerTwoName {
+#game_playerTwoStatus {
     background-color: var(--color-playertwo);
 }
 
 .game .wrapper {
+    margin: 2rem 0 1.5rem;
     padding: 1rem;
     background-color: #fff;
     border-radius: 1rem;
@@ -158,14 +168,6 @@ body {
 
 .game__board img {
     width: 70%;
-}
-
-.game__board div:nth-of-type(even) {
-    color: var(--color-playerone)
-}
-
-.game__board div:nth-of-type(odd) {
-    color: var(--color-playertwo)
 }
 
 div.game_line {
@@ -194,4 +196,54 @@ div.game_line {
 
 .game_line--v1 {
     left: calc(66.666% - 4px);
+}
+
+.game__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game__message {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+
+.game__message p {
+    background-color: #2ec4b6;
+    padding: .75rem 1rem;
+    border-radius: .5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+#game__replay {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#game__replay button {
+    padding: .2rem 2rem;
+
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 2px solid #4c4c4c;
+}
+
+#game__replay button:hover {
+    border-color: #000;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
