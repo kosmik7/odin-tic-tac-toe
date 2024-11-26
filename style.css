@@ -148,8 +148,10 @@ body {
     justify-content: center;
     align-items: center;
     aspect-ratio: 1;
-    font-size: min(15vw, 6rem);
-    font-weight: 600;
+}
+
+.game__board img {
+    width: 70%;
 }
 
 .game__board div:nth-of-type(even) {

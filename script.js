@@ -1,17 +1,42 @@
 const gameBoard = (() => {
     const board = Array(9).fill(null);
+    const boardElement = document.querySelectorAll(
+        ".game__board>div[data-index]"
+    );
 
-    const placeMark = (playerIndex, pos) => {
-        if (board[pos]) return false;
-        board[pos] = playerIndex;
+    const placeMark = (playerIndex, position) => {
+        if (board[position]) return false;
+        board[position] = playerIndex;
         console.log(
-            `Player ${playerIndex} placed a mark in position ${pos}`,
-            board
+            `Player ${playerIndex} placed a mark in position ${position}`
         );
+        render([position]);
         return true;
     };
-    const resetBoard = () => board.fill(null);
+    const resetBoard = () => {
+        board.fill(null);
+        render(board);
+    };
     const isTie = () => !board.includes(null);
+    const render = (array) => {
+        const img = document.createElement("img");
+        array.forEach((value, index) => {
+            switch (board[value]) {
+                case 1:
+                    img.src = "ico-cross.svg";
+                    img.alt = "Cross icon";
+                    boardElement[value].appendChild(img);
+                    break;
+                case 2:
+                    img.src = "ico-circle.svg";
+                    img.alt = "Circle icon";
+                    boardElement[value].appendChild(img);
+                    break;
+                default:
+                    boardElement[index].innerHTML = "";
+            }
+        });
+    };
 
     return { placeMark, resetBoard, isTie };
 })();
@@ -27,7 +52,7 @@ const players = ((
     let currentIndex = 0;
 
     const getCurrentPlayer = () => list[currentIndex];
-    const setPosition = (pos) => list[currentIndex].board.push(pos);
+    const setPosition = (position) => list[currentIndex].board.push(position);
     const nextTurn = () => (currentIndex = 1 - currentIndex);
     const resetBoard = () =>
         list.forEach((player) => {
@@ -51,7 +76,9 @@ const gameController = (function () {
 
     const checkGameOver = (currentPlayer) => {
         const hasWinConditions = winConditions.some((condition) =>
-            condition.every((pos) => currentPlayer.board.includes(pos))
+            condition.every((position) =>
+                currentPlayer.board.includes(position)
+            )
         );
 
         if (hasWinConditions) {
