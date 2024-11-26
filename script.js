@@ -6,7 +6,7 @@ const gameBoard = (() => {
     );
     boardElement.addEventListener("click", (event) => {
         const square = event.target.closest("[data-index]");
-        if (square) gameController.playTurn(square.dataset.index);
+        if (square) gameController.playTurn(Number(square.dataset.index));
     });
 
     const placeMark = (playerIndex, position) => {
