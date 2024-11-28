@@ -92,6 +92,7 @@ th {
     --color-playerone--light: #CBF3F0;
     --color-playertwo: #FF9F1C;
     --color-playertwo--light: #FFBF69;
+    --color-neutral: #292F36;
 }
 
 body {
@@ -204,25 +205,38 @@ div.game_line {
     justify-content: center;
 }
 
-.game__message {
+#game__message {
     position: absolute;
     width: 100%;
     height: 100%;
     visibility: hidden;
 }
 
-.game__message p {
-    background-color: #2ec4b6;
+#game__message p {
+    background-color: var(--color-neutral);
+    color: #fff;
     padding: .75rem 1rem;
-    border-radius: .5rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5rem;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 
     text-align: center;
     font-size: 1.2rem;
     font-weight: 500;
+
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
 }
 
+#game__message.visible {
+    visibility: visible;
+}
+
+#game__message.visible p {
+    opacity: 1;
+    transform: scale(1);
+}
 
 #game__replay {
     margin: 1rem;

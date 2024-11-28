@@ -64,6 +64,12 @@ const players = ((
 })();
 
 const gameController = (function () {
+    const messageWrapperElement = document.getElementById("game__message");
+    const messageElement = messageWrapperElement.querySelector("p");
+    document
+        .getElementById("game__replay")
+        .addEventListener("click", () => resetGame());
+
     let winConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -76,21 +82,23 @@ const gameController = (function () {
     ];
 
     const checkGameOver = (currentPlayer) => {
-        const hasWinConditions = winConditions.some((condition) =>
+        const hasWinCondition = winConditions.some((condition) =>
             condition.every((position) =>
                 currentPlayer.board.includes(position)
             )
         );
-
-        if (hasWinConditions) {
-            console.log("Game Over: " + currentPlayer.name + " has won");
-            resetGame();
-        } else if (gameBoard.isTie()) {
-            console.log("Game Over: Tie");
-            resetGame();
-        }
+        if (hasWinCondition) {
+            renderMessage(`${currentPlayer.name} has won`);
+        } else if (gameBoard.isTie()) renderMessage("Tie");
+    };
+    const renderMessage = (string) => {
+        messageElement.innerText = string;
+        messageWrapperElement.classList.add("visible");
+        messageWrapperElement.addEventListener("click", () => resetGame());
     };
     const resetGame = () => {
+        messageWrapperElement.removeEventListener;
+        messageWrapperElement.classList.remove("visible");
         gameBoard.resetBoard();
         players.resetBoard();
     };
