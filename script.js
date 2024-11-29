@@ -5,6 +5,10 @@ const gameBoard = (() => {
         ".game__board>div[data-index]"
     );
     boardElement.addEventListener("click", (event) => {
+        if (gameController.isGameOver()) {
+            gameController.resetGame();
+            return;
+        }
         const square = event.target.closest("[data-index]");
         if (square) gameController.playTurn(Number(square.dataset.index));
     });
@@ -64,11 +68,8 @@ const players = ((
 })();
 
 const gameController = (function () {
-    const messageWrapperElement = document.getElementById("game__message");
-    const messageElement = messageWrapperElement.querySelector("p");
-    document
-        .getElementById("game__replay")
-        .addEventListener("click", () => resetGame());
+    let gameOver = false;
+    const messageElement = document.getElementById("game__message");
 
     let winConditions = [
         [0, 1, 2],
@@ -88,17 +89,19 @@ const gameController = (function () {
             )
         );
         if (hasWinCondition) {
-            renderMessage(`${currentPlayer.name} has won`);
-        } else if (gameBoard.isTie()) renderMessage("Tie");
+            renderMessage(`${currentPlayer.name} has won!`);
+            gameOver = true;
+        } else if (gameBoard.isTie()) {
+            renderMessage("Tie!");
+            gameOver = true;
+        }
     };
-    const renderMessage = (string) => {
-        messageElement.innerText = string;
-        messageWrapperElement.classList.add("visible");
-        messageWrapperElement.addEventListener("click", () => resetGame());
-    };
+
+    const renderMessage = (string) => (messageElement.innerText = string);
+
+    const isGameOver = () => gameOver;
     const resetGame = () => {
-        messageWrapperElement.removeEventListener;
-        messageWrapperElement.classList.remove("visible");
+        gameOver = false;
         gameBoard.resetBoard();
         players.resetBoard();
     };
@@ -107,10 +110,10 @@ const gameController = (function () {
         const play = gameBoard.placeMark(currentPlayer.id, position);
         if (play) {
             players.setPosition(position);
-            checkGameOver(currentPlayer);
             players.nextTurn();
+            checkGameOver(currentPlayer);
         }
     };
-
-    return { playTurn };
+    resetGame();
+    return { playTurn, isGameOver, resetGame };
 })();
