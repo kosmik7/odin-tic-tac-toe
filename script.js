@@ -4,6 +4,8 @@ const gameBoard = (() => {
     const boardSquaresElements = boardElement.querySelectorAll(
         ".game__board>div[data-index]"
     );
+    let winAnimationTimeout;
+
     boardElement.addEventListener("click", (event) => {
         if (gameController.isGameOver()) {
             gameController.resetGame();
@@ -20,6 +22,7 @@ const gameBoard = (() => {
         return true;
     };
     const resetBoard = () => {
+        clearTimeout(winAnimationTimeout);
         board.fill(null);
         render(board);
     };
@@ -39,11 +42,23 @@ const gameBoard = (() => {
                     boardSquaresElements[value].appendChild(img);
                     break;
                 default:
+                    boardSquaresElements[index].style.background = "none";
                     boardSquaresElements[index].innerHTML = "";
             }
         });
     };
-    return { placeMark, resetBoard, isTie };
+    const renderWinCondition = (array, id) => {
+        const color =
+            id === 1
+                ? "var(--color-playerone--light)"
+                : "var(--color-playertwo--light)";
+        array.forEach((value, index) => {
+            winAnimationTimeout = setTimeout(() => {
+                boardSquaresElements[value].style.background = color;
+            }, index * 200);
+        });
+    };
+    return { placeMark, resetBoard, isTie, renderWinCondition };
 })();
 
 const players = ((
@@ -83,12 +98,13 @@ const gameController = (function () {
     ];
 
     const checkGameOver = (currentPlayer) => {
-        const hasWinCondition = winConditions.some((condition) =>
+        const hasWinCondition = winConditions.find((condition) =>
             condition.every((position) =>
                 currentPlayer.board.includes(position)
             )
         );
         if (hasWinCondition) {
+            gameBoard.renderWinCondition(hasWinCondition, currentPlayer.id);
             renderMessage(`${currentPlayer.name} has won!`);
             gameOver = true;
         } else if (gameBoard.isTie()) {
