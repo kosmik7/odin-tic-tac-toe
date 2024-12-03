@@ -120,6 +120,7 @@ const gameController = (function () {
         gameOver = false;
         gameBoard.resetBoard();
         players.resetBoard();
+        renderTurnOrder();
     };
     const playTurn = (position) => {
         const currentPlayer = players.getCurrentPlayer();
@@ -127,9 +128,12 @@ const gameController = (function () {
         if (play) {
             players.setPosition(position);
             players.nextTurn();
+            renderTurnOrder(currentPlayer.id);
             checkGameOver(currentPlayer);
         }
     };
+    const renderTurnOrder = () =>
+        renderMessage(`${players.getCurrentPlayer().name} turn`);
     resetGame();
     return { playTurn, isGameOver, resetGame };
 })();
