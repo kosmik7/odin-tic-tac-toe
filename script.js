@@ -85,6 +85,8 @@ const players = ((
 const gameController = (function () {
     let gameOver = false;
     const messageElement = document.getElementById("game__message");
+    const resetBtn = document.getElementById("game__replay");
+    resetBtn.addEventListener("click", () => resetGame());
 
     let winConditions = [
         [0, 1, 2],
