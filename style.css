@@ -105,7 +105,7 @@ body {
     width: min(60ch, 94%);
 }
 
-.game__status {
+#game__status {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: .25rem 12px;
@@ -115,7 +115,7 @@ body {
     font-weight: 500;
 }
 
-.game__status > div {
+#game__status > div {
     display: grid;
     grid: subgrid / subgrid;
     grid-row: span 2;
@@ -127,7 +127,7 @@ body {
     padding: .5rem;
 }
 
-.game__status > div > p {
+#game__status > div > p {
     display: grid;
     grid-row: span 1;
     align-self: center;
@@ -135,11 +135,11 @@ body {
     text-align: center;
 }
 
-#game_playerOneStatus {
+div#game_playerOneStatus {
     background-color: var(--color-playerone);
 }
 
-#game_playerTwoStatus {
+div#game_playerTwoStatus {
     background-color: var(--color-playertwo);
 }
 

@@ -66,25 +66,42 @@ const players = ((
     playerTwoName = "Player Two"
 ) => {
     const list = [
-        { name: playerOneName, id: 1, board: [] },
-        { name: playerTwoName, id: 2, board: [] },
+        { name: playerOneName, id: 1, score: 0, board: [] },
+        { name: playerTwoName, id: 2, score: 0, board: [] },
     ];
     let currentIndex = 0;
 
     const getCurrentPlayer = () => list[currentIndex];
     const setPosition = (position) => list[currentIndex].board.push(position);
     const nextTurn = () => (currentIndex = 1 - currentIndex);
+    const incrementScore = (object) => ++object.score;
     const resetBoard = () =>
         list.forEach((player) => {
             player.board = [];
         });
 
-    return { getCurrentPlayer, setPosition, nextTurn, resetBoard };
+    return {
+        getCurrentPlayer,
+        setPosition,
+        nextTurn,
+        resetBoard,
+        incrementScore,
+    };
 })();
 
 const gameController = (function () {
     let gameOver = false;
+    let tie = 0;
     const messageElement = document.getElementById("game__message");
+    const gameStatusElement = document.getElementById("game__status");
+    const game_playerOneScore = gameStatusElement.querySelector(
+        "#game_playerOneScore"
+    );
+    const game_playerTwoScore = gameStatusElement.querySelector(
+        "#game_playerTwoScore"
+    );
+    const game_tieScore = gameStatusElement.querySelector("#game_tieScore");
+
     const resetBtn = document.getElementById("game__replay");
     resetBtn.addEventListener("click", () => resetGame());
 
@@ -108,9 +125,14 @@ const gameController = (function () {
         if (hasWinCondition) {
             gameBoard.renderWinCondition(hasWinCondition, currentPlayer.id);
             renderMessage(`${currentPlayer.name} has won!`);
+            renderScore(
+                currentPlayer.id,
+                players.incrementScore(currentPlayer)
+            );
             gameOver = true;
         } else if (gameBoard.isTie()) {
             renderMessage("Tie!");
+            renderScore(0, ++tie);
             gameOver = true;
         }
     };
@@ -136,6 +158,11 @@ const gameController = (function () {
     };
     const renderTurnOrder = () =>
         renderMessage(`${players.getCurrentPlayer().name} turn`);
+    const renderScore = (id, score) => {
+        if (id === 0) game_tieScore.innerHTML = score;
+        else if (id === 1) game_playerOneScore.innerHTML = score;
+        else if (id === 2) game_playerTwoScore.innerHTML = score;
+    };
     resetGame();
     return { playTurn, isGameOver, resetGame };
 })();
